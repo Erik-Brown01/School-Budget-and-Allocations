@@ -4,8 +4,12 @@ import altair as alt
 import re
 import numpy as np
 
+##################################
+
 ## Page Title
 st.title("School Budget and Allocations")
+
+###################################
 
 ## Utility functions
 def moneyToFloat(money):
