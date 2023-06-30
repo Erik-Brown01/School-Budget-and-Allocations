@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[59]:
+# In[62]:
 
 
 # Convert to .py
@@ -16,7 +16,8 @@ get_ipython().system(
 import pandas as pd
 from re import sub
 from decimal import Decimal
-import streamlit as st
+
+# import streamlit as st
 
 
 def moneyToFloat(money):
@@ -26,18 +27,19 @@ def moneyToFloat(money):
 
 # # Total Allocations vs Budget
 
-# In[21]:
+# In[3]:
 
 
+district = 5  # Write the district of choice
 allocations = pd.read_csv(
-    r"C:\Users\ebroh\BetaNYC\School Budgets\School-Budget-and-Allocations\data\district 5\allocation_district_5.csv"
+    rf"..\data\district {district}\allocation_district_{district}.csv"
 )
 allocations = allocations.drop(columns=["Unnamed: 0"])
 allocations["amountNum"] = allocations["amount"].apply((lambda x: moneyToFloat(x)))
-# allocations
+allocations
 
 
-# In[22]:
+# In[4]:
 
 
 totalAllocations = (
@@ -45,23 +47,27 @@ totalAllocations = (
     .sum()
     .reset_index()
 )
-totalAllocations = totalAllocations.rename(columns={"amountNum": "total"})
-totalAllocations["type"] = "allocations"
-# totalAllocations
-
-
-# In[28]:
-
-
-budget = pd.read_csv(
-    r"C:\Users\ebroh\BetaNYC\School Budgets\School-Budget-and-Allocations\data\district 5\budget_district_5.csv"
+totalAllocations = totalAllocations.rename(
+    columns={"amountNum": "total", "Type": "type"}
 )
+totalAllocations["type"] = "allocations"
+totalAllocations.to_csv(
+    rf"..\data\district {district}\graphs\total_allocations_district_{district}.csv",
+    index=False,
+)  # 8
+totalAllocations.head()
+
+
+# In[6]:
+
+
+budget = pd.read_csv(f"../data/district {district}/budget_district_{district}.csv")
 budget = budget.drop(columns=["Unnamed: 0"])
 budget["amountNum"] = budget["amount"].apply((lambda x: moneyToFloat(x)))
-budget
+# budget.head()
 
 
-# In[24]:
+# In[7]:
 
 
 totalBudget = (
@@ -69,17 +75,21 @@ totalBudget = (
 )
 totalBudget = totalBudget.rename(columns={"amountNum": "total"})
 totalBudget["type"] = "budget"
-# totalBudget
+totalBudget.to_csv(
+    rf"..\data\district {district}\graphs\total_budget_district_{district}.csv",
+    index=False,
+)  # 7
+totalBudget.head()
 
 
-# In[25]:
+# In[11]:
 
 
 totals = pd.concat([totalBudget, totalAllocations])
-# totals.sample(15)
+totals
 
 
-# In[27]:
+# In[38]:
 
 
 totalsPivot = totals.pivot(
@@ -93,27 +103,29 @@ totalsPivot = totalsPivot.reset_index()
 new_columns = ["index", "location_code", "type", "2018", "2019", "2020", "2021", "2022"]
 totalsPivot.columns = new_columns
 totalsPivot = totalsPivot.drop(columns="index")
+totalsPivot.to_csv(
+    rf"..\data\district {district}\graphs\total_budget_and_allocation_district_{district}.csv",
+    index=False,
+)  # 6
 totalsPivot
 
 
 # # Funding by Category
 
-# In[65]:
+# In[15]:
 
 
-allocationCategories = pd.read_csv(
-    r"C:\Users\ebroh\BetaNYC\School Budgets\School-Budget-and-Allocations\data\allocation_category_lookup.csv"
-)
+allocationCategories = pd.read_csv(r"..\data\allocation_category_lookup.csv")
 allocationCategories
 
 
-# In[112]:
+# In[16]:
 
 
 allocationCategories["allocation_category_group"].unique()
 
 
-# In[66]:
+# In[17]:
 
 
 district_5_allocation_categories = allocations.merge(
@@ -125,7 +137,7 @@ district_5_allocation_categories = allocations.merge(
 district_5_allocation_categories
 
 
-# In[69]:
+# In[18]:
 
 
 funding_per_category = (
@@ -138,7 +150,7 @@ funding_per_category = (
 funding_per_category
 
 
-# In[75]:
+# In[19]:
 
 
 funding_per_category_pivot = funding_per_category.pivot(
@@ -146,27 +158,31 @@ funding_per_category_pivot = funding_per_category.pivot(
     columns=["fiscal_year"],
     values="amountNum",
 ).reset_index()
+funding_per_category_pivot.to_csv(
+    rf"..\data\district {district}\graphs\funding_per_category_district_{district}.csv",
+    index=False,
+)  # 5
 funding_per_category_pivot
 
 
 # # Enrollment and FSF
 
-# In[81]:
+# In[20]:
 
 
 enrollment = pd.read_csv(
-    r"C:\Users\ebroh\BetaNYC\School Budgets\School-Budget-and-Allocations\data\district 5\district_5_demographic_data.csv"
+    f"..\data\district {district}\district_{district}_demographic_data.csv"
 )
 enrollment
 
 
-# In[82]:
+# In[21]:
 
 
 enrollment.columns
 
 
-# In[91]:
+# In[22]:
 
 
 def removeLeadingZero(string):
@@ -177,7 +193,7 @@ def year2FY(year):
     return sub(r"-\d\d$", "", year)
 
 
-# In[93]:
+# In[23]:
 
 
 enrollment["DBN"] = enrollment["DBN"].apply(lambda x: removeLeadingZero(x))
@@ -185,7 +201,7 @@ enrollment["fiscal_year"] = enrollment["Year"].apply(lambda x: year2FY(x))
 enrollment
 
 
-# In[106]:
+# In[24]:
 
 
 enrollmentFinal = pd.DataFrame()
@@ -202,7 +218,8 @@ enrollmentFinal["3K-PreK_enrollment"] = (
     enrollmentFinal["Grade 3K"] + enrollmentFinal["Grade PK (Half Day & Full Day)"]
 )
 enrollmentFinal["K-5_enrollment"] = (
-    enrollmentFinal["Total Enrollment"] - enrollmentFinal["3K-PreK_enrollment"]
+    enrollmentFinal["Total Enrollment"].str.replace(",", "").astype("int64")
+    - enrollmentFinal["3K-PreK_enrollment"]
 )
 enrollmentFinal = enrollmentFinal.drop(
     columns=["Grade 3K", "Grade PK (Half Day & Full Day)"]
@@ -210,7 +227,7 @@ enrollmentFinal = enrollmentFinal.drop(
 enrollmentFinal
 
 
-# In[136]:
+# In[36]:
 
 
 pivot1 = enrollmentFinal.pivot(
@@ -241,12 +258,16 @@ temp = temp.rename(
 temp = temp.drop(columns=[2022])
 enrollmentPivot = enrollmentPivot.drop(columns="2017")
 enrollmentPivot = pd.concat([enrollmentPivot, temp])
+enrollmentPivot.to_csv(
+    rf"..\data\district {district}\graphs\enrollment_district_{district}.csv",
+    index=False,
+)  # 4
 enrollmentPivot
 
 
 # # Staff vs Enrollment
 
-# In[148]:
+# In[27]:
 
 
 teaching_budget = budget[
@@ -272,7 +293,7 @@ teaching_budget["budget_category"] = teaching_budget["budget_category"].replace(
 teaching_budget.sample(10)
 
 
-# In[152]:
+# In[28]:
 
 
 positions_per_school = (
@@ -285,7 +306,7 @@ positions_per_school = (
 positions_per_school
 
 
-# In[168]:
+# In[35]:
 
 
 positions_per_school_pivot = positions_per_school.pivot(
@@ -299,10 +320,14 @@ positions_per_school_pivot = positions_per_school_pivot.rename(
 positions_per_school_pivot = positions_per_school_pivot.rename(
     columns={2018: "2018", 2019: "2019", 2020: "2020", 2021: "2021"}
 )
+positions_per_school_pivot.to_csv(
+    rf"..\data\district {district}\graphs\positions_per_school_district_{district}.csv",
+    index=False,
+)  # 3
 positions_per_school_pivot
 
 
-# In[170]:
+# In[37]:
 
 
 totalEnrollment = enrollment[["DBN", "fiscal_year", "Total Enrollment"]]
@@ -313,12 +338,16 @@ totalEnrollmentPivot = totalEnrollment.pivot(
 totalEnrollmentPivot["type"] = "Total Enrollment"
 staffAndEnrollment = pd.concat([totalEnrollmentPivot, positions_per_school_pivot])
 staffAndEnrollment = staffAndEnrollment.drop(columns=["2017", 2022])
-staffAndEnrollment
+staffAndEnrollment.to_csv(
+    rf"..\data\district {district}\graphs\staff_and_enrollment_district_{district}.csv",
+    index=False,
+)  # 2
+staffAndEnrollment.head()
 
 
 # # Budget Per Staff Member
 
-# In[173]:
+# In[31]:
 
 
 pos_and_budget = (
@@ -331,7 +360,7 @@ pos_and_budget = (
 pos_and_budget
 
 
-# In[177]:
+# In[34]:
 
 
 budget_per_staff = pos_and_budget.merge(
@@ -340,7 +369,11 @@ budget_per_staff = pos_and_budget.merge(
 budget_per_staff["average_budget"] = (
     budget_per_staff["amountNum"].astype(float) / budget_per_staff["num_positions"]
 )
+budget_per_staff.to_csv(
+    rf"..\data\district {district}\graphs\budget_per_staff_member_district_{district}.csv",
+    index=False,
+)  # 1
 budget_per_staff
 
 
-# In[ ]:
+# In[89]:
