@@ -1,0 +1,80 @@
+location_code,2018,2019,2020,2021,type
+M030,253,236,205,171,Total Enrollment
+M036,355,374,312,290,Total Enrollment
+M046,630,557,490,479,Total Enrollment
+M092,259,243,214,210,Total Enrollment
+M123,471,461,418,430,Total Enrollment
+M125,284,303,294,264,Total Enrollment
+M129,406,377,306,247,Total Enrollment
+M133,225,225,210,200,Total Enrollment
+M148,374,382,325,265,Total Enrollment
+M154,287,282,219,227,Total Enrollment
+M157,250,233,195,186,Total Enrollment
+M161,806,762,687,615,Total Enrollment
+M175,347,343,321,290,Total Enrollment
+M194,193,185,169,166,Total Enrollment
+M197,305,289,233,220,Total Enrollment
+M200,384,375,298,310,Total Enrollment
+M285,216,213,161,191,Total Enrollment
+M286,125,103,93,80,Total Enrollment
+M304,288,239,207,205,Total Enrollment
+M318,210,206,186,180,Total Enrollment
+M362,718,698,700,654,Total Enrollment
+M369,387,380,386,327,Total Enrollment
+M371,,,78,131,Total Enrollment
+M499,"1,257","1,072",994,877,Total Enrollment
+M514,142,138,135,100,Total Enrollment
+M517,311,374,373,347,Total Enrollment
+M670,560,541,536,517,Total Enrollment
+M692,491,485,496,524,Total Enrollment
+M030,10.0,12.0,12.0,12.0,Paraprofessionals
+M030,32.0,31.0,31.0,24.0,Teacher
+M036,20.0,16.0,17.0,18.0,Paraprofessionals
+M036,35.8,34.0,34.0,33.0,Teacher
+M046,10.0,14.0,19.0,21.0,Paraprofessionals
+M046,52.0,49.0,48.0,44.0,Teacher
+M092,12.0,11.0,11.0,10.0,Paraprofessionals
+M092,23.0,21.0,19.0,18.0,Teacher
+M123,7.0,7.0,8.0,12.0,Paraprofessionals
+M123,41.0,38.0,40.0,38.0,Teacher
+M125,21.0,24.0,24.0,22.0,Paraprofessionals
+M125,17.0,17.0,20.0,20.0,Teacher
+M129,17.0,17.0,15.0,15.0,Paraprofessionals
+M129,34.0,36.0,36.0,34.0,Teacher
+M133,9.0,11.0,11.0,13.0,Paraprofessionals
+M133,20.0,23.0,25.0,26.0,Teacher
+M148,3.0,4.0,4.0,7.0,Paraprofessionals
+M148,26.0,34.0,31.0,30.0,Teacher
+M154,7.0,9.0,8.0,9.0,Paraprofessionals
+M154,22.0,24.0,26.0,22.0,Teacher
+M157,1.0,3.0,3.0,3.0,Paraprofessionals
+M161,20.0,16.0,16.0,15.0,Paraprofessionals
+M161,58.0,58.0,57.0,56.0,Teacher
+M175,11.0,11.0,12.0,8.0,Paraprofessionals
+M175,21.0,24.0,22.0,23.0,Teacher
+M194,8.0,7.0,7.0,6.0,Paraprofessionals
+M194,19.0,21.0,19.0,15.0,Teacher
+M197,19.0,18.0,18.0,18.0,Paraprofessionals
+M197,28.0,27.0,28.0,28.0,Teacher
+M200,8.0,11.0,13.0,12.0,Paraprofessionals
+M200,36.0,34.0,30.0,29.0,Teacher
+M285,0.0,0.0,,,Paraprofessionals
+M286,7.0,7.0,6.0,6.0,Paraprofessionals
+M286,16.0,11.0,14.0,12.0,Teacher
+M302,5.0,,,,Paraprofessionals
+M302,15.0,,,,Teacher
+M304,2.0,2.0,2.0,1.0,Paraprofessionals
+M318,6.0,6.0,7.0,10.0,Paraprofessionals
+M318,14.2,13.0,14.0,13.0,Teacher
+M362,8.0,7.0,8.0,12.0,Paraprofessionals
+M362,30.0,31.0,32.0,26.0,Teacher
+M367,2.0,,,,Paraprofessionals
+M369,1.0,2.0,3.0,4.0,Paraprofessionals
+M499,6.0,5.0,7.0,6.0,Paraprofessionals
+M499,41.0,41.0,35.0,30.0,Teacher
+M514,4.0,6.0,9.0,9.0,Paraprofessionals
+M514,15.0,13.0,15.0,17.0,Teacher
+M517,3.0,4.0,4.0,5.0,Paraprofessionals
+M517,18.0,23.0,29.0,29.0,Teacher
+M670,3.0,2.0,4.0,7.0,Paraprofessionals
+M692,1.0,1.0,,1.0,Paraprofessionals
