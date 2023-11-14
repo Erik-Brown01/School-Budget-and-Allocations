@@ -12,10 +12,11 @@ jobs:
       - name: Install
         run: |
           pip3 install --upgrade pip
-          pip3 install notebook
+          pip3 install notebook black
       - name: Run
         run: |
           jupyter nbconvert ./notebooks/*.ipynb --to="python" --output-dir="./scripts"
+          black ./scripts/*.py
       - name: Commit updates
         uses: EndBug/add-and-commit@v9.1.1
         with:
